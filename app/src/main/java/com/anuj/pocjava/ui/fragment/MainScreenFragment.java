@@ -10,10 +10,13 @@ import androidx.databinding.DataBindingUtil;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.test.espresso.IdlingResource;
+import androidx.test.espresso.idling.CountingIdlingResource;
 
 import com.anuj.pocjava.R;
 import com.anuj.pocjava.adapter.MainScreenListAdapter;
 import com.anuj.pocjava.databinding.FragmentMainBinding;
+import com.anuj.pocjava.log.Logger;
 import com.anuj.pocjava.ui.MainActivity;
 import com.anuj.pocjava.util.Utility;
 import com.anuj.pocjava.viewmodel.MainScreenViewModel;
@@ -23,7 +26,20 @@ public class MainScreenFragment extends Fragment {
     private FragmentMainBinding binding;
     private MainScreenViewModel viewModel;
 
-    @Override public void onCreate(Bundle savedInstanceState) {
+    private IdlingCallback cb;
+    public MainScreenFragment(IdlingCallback callback) {
+        cb = callback;
+    }
+
+    public interface IdlingCallback {
+        void onIdle();
+    }
+
+    public MainScreenFragment() {
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         viewModel = ViewModelProviders.of(this).get(MainScreenViewModel.class);
         observeFields();
@@ -31,10 +47,12 @@ public class MainScreenFragment extends Fragment {
 
     private void observeFields() {
         viewModel.getResult().observe(this, it -> {
-            if(viewModel.isSuccessful(it.getResponse())) {
+            if(cb!=null)
+                cb.onIdle();
+            if (viewModel.isSuccessful(it.getResponse())) {
                 removeErrorMessage();
-                ((MainScreenListAdapter)binding.rvItemList.getAdapter()).setListItems(it.getResponse().getRows());
-                ((MainActivity)getActivity()).setScreenTitle(it.getResponse().getTitle());
+                ((MainScreenListAdapter) binding.rvItemList.getAdapter()).setListItems(it.getResponse().getRows());
+                setScreenTitle(it.getResponse().getTitle());
             } else {
                 setErrorMessage(viewModel.getErrorMessage());
             }
@@ -42,22 +60,31 @@ public class MainScreenFragment extends Fragment {
         });
     }
 
+    private void setScreenTitle(String title) {
+        if(getActivity() != null && getActivity() instanceof MainActivity)
+            ((MainActivity) getActivity()).setScreenTitle(title);
+    }
+
     private void setErrorMessage(String message) {
+        binding.rvItemList.setVisibility(View.GONE);
         binding.tvErrorText.setText(message);
         binding.tvErrorText.setVisibility(View.VISIBLE);
     }
 
     private void removeErrorMessage() {
+        binding.rvItemList.setVisibility(View.VISIBLE);
         binding.tvErrorText.setVisibility(View.GONE);
         binding.tvErrorText.setText("");
     }
 
-    @Override public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    @Override
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_main, container, false);
         return binding.getRoot();
     }
 
-    @Override public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
+    @Override
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         getResponseFromServer(false);
         binding.srlSwipeRefresh.setOnRefreshListener(() -> getResponseFromServer(true));
@@ -66,19 +93,21 @@ public class MainScreenFragment extends Fragment {
     }
 
     private void getResponseFromServer(boolean force) {
-        if(Utility.isNetworkAvailable(getActivity())) {
+        if (Utility.isNetworkAvailable(getActivity())) {
             binding.srlSwipeRefresh.setRefreshing(true);
             viewModel.getResponse(force);
-        } else
+        } else {
+            if(cb != null)
+                cb.onIdle();
             setErrorMessage("It seems like internet is not available. Please connect and try again.");
+        }
     }
 
 
     public static MainScreenFragment newInstance(Bundle args) {
         MainScreenFragment instance = new MainScreenFragment();
-        if(args != null)
+        if (args != null)
             instance.setArguments(args);
         return instance;
     }
-
 }

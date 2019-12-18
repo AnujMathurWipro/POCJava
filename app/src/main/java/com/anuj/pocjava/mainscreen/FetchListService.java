@@ -1,11 +1,12 @@
 package com.anuj.pocjava.mainscreen;
 
 import com.anuj.pocjava.models.Response;
+import com.anuj.pocjava.util.StringConstants;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 
 public interface FetchListService {
-    @GET("/s/2iodh4vg0eortkl/facts.json")
+    @GET(StringConstants.API_URL)
     Call<Response> getList();
 }

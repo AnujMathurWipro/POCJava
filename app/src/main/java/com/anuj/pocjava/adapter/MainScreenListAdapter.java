@@ -39,7 +39,7 @@ public class MainScreenListAdapter extends RecyclerView.Adapter<MainScreenListAd
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         ItemListBinding binding = DataBindingUtil.getBinding(holder.itemView);
-        if(binding != null) {
+        if (binding != null) {
             RowsItem item = itemList.get(position);
             binding.setItem(item);
             binding.executePendingBindings();

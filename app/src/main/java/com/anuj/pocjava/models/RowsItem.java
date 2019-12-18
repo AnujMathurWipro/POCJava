@@ -1,5 +1,7 @@
 package com.anuj.pocjava.models;
 
+import androidx.annotation.Nullable;
+
 public class RowsItem {
     private String imageHref;
     private String description;
@@ -21,5 +23,16 @@ public class RowsItem {
 
     public String getTitle() {
         return title;
+    }
+
+    @Override
+    public boolean equals(@Nullable Object obj) {
+        if (super.equals(obj))
+            return true;
+        else if (obj instanceof RowsItem) {
+            RowsItem i = (RowsItem) obj;
+            return this.title.equals(i.title) && this.description.equals(i.description) && this.imageHref.equals(i.imageHref);
+        } else
+            return false;
     }
 }

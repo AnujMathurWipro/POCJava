@@ -12,33 +12,34 @@ import com.anuj.pocjava.ui.fragment.MainScreenFragment;
 
 public class MainActivity extends AppCompatActivity {
 
-        private ActivityMainBinding binding = null;
+    private ActivityMainBinding binding = null;
 
-        @Override public void onCreate(Bundle savedInstanceState) {
-            super.onCreate(savedInstanceState);
-            binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-            addMainFragment();
-        }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        addMainFragment();
+    }
 
-        private void addMainFragment() {
-            MainScreenFragment frag = MainScreenFragment.newInstance(null);
-            addFragment(frag, binding.flFragmentContainer.getId());
-        }
+    private void addMainFragment() {
+        MainScreenFragment frag = MainScreenFragment.newInstance(null);
+        addFragment(frag, binding.flFragmentContainer.getId());
+    }
 
-        private void addFragment(MainScreenFragment frag, int id) {
-            addFragment(frag, id, false);
-        }
+    private void addFragment(MainScreenFragment frag, int id) {
+        addFragment(frag, id, false);
+    }
 
-        private void addFragment(MainScreenFragment frag, int id, boolean addToBackStack) {
-            FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
-            fragTransaction.replace(id, frag, frag.getClass().getSimpleName());
-            if(addToBackStack)
-                fragTransaction.addToBackStack(null);
-            fragTransaction.commit();
-        }
+    private void addFragment(MainScreenFragment frag, int id, boolean addToBackStack) {
+        FragmentTransaction fragTransaction = getSupportFragmentManager().beginTransaction();
+        fragTransaction.replace(id, frag, frag.getClass().getSimpleName());
+        if (addToBackStack)
+            fragTransaction.addToBackStack(null);
+        fragTransaction.commit();
+    }
 
-        public void setScreenTitle(String title) {
-            binding.toolbar.setTitle(title);
-        }
+    public void setScreenTitle(String title) {
+        binding.toolbar.setTitle(title);
+    }
 
 }
