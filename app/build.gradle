@@ -8,7 +8,7 @@ android {
         targetCompatibility 1.8
     }
     defaultConfig {
-        applicationId "com.example.pocapplication"
+        applicationId "com.anuj.pocjava"
         minSdkVersion 25
         targetSdkVersion 28
         versionCode 1
