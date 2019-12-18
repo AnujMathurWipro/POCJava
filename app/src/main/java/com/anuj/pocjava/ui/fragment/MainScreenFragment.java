@@ -32,6 +32,7 @@ public class MainScreenFragment extends Fragment {
     private void observeFields() {
         viewModel.getResult().observe(this, it -> {
             if(viewModel.isSuccessful(it.getResponse())) {
+                removeErrorMessage();
                 ((MainScreenListAdapter)binding.rvItemList.getAdapter()).setListItems(it.getResponse().getRows());
                 ((MainActivity)getActivity()).setScreenTitle(it.getResponse().getTitle());
             } else {
@@ -43,6 +44,12 @@ public class MainScreenFragment extends Fragment {
 
     private void setErrorMessage(String message) {
         binding.tvErrorText.setText(message);
+        binding.tvErrorText.setVisibility(View.VISIBLE);
+    }
+
+    private void removeErrorMessage() {
+        binding.tvErrorText.setVisibility(View.GONE);
+        binding.tvErrorText.setText("");
     }
 
     @Override public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
