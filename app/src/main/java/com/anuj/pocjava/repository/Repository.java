@@ -40,7 +40,7 @@ public class Repository {
 
             @Override
             public void onFailure(@NotNull Call<T> call, @NotNull Throwable t) {
-                retrofit2.Response<T> response = retrofit2.Response.error(0, ResponseBody.create(MediaType.get("application/json"), (String)null));
+                retrofit2.Response<T> response = retrofit2.Response.error(400, ResponseBody.create(MediaType.get("application/json"), ""));
                 handleResponse(response, liveData);
             }
         });
