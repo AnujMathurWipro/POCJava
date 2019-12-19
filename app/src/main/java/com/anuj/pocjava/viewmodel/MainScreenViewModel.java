@@ -11,16 +11,24 @@ import com.anuj.pocjava.util.Constants;
 
 public class MainScreenViewModel extends ViewModel {
 
-    private MutableLiveData<BaseResult<Response>> result = new MutableLiveData<>();
-    private Repository repository = new Repository();
+    public MainScreenViewModel(MutableLiveData<BaseResult<Response>> data, Repository r) {
+        this.result = data;
+        repository = r;
+    }
+
+    private final MutableLiveData<BaseResult<Response>> result;
+    private final Repository repository;
 
     public LiveData<BaseResult<Response>> getResult() {
         return result;
     }
 
-    public void getResponse(boolean force) {
-        if (force || result.getValue() == null)
+    public boolean getResponse(boolean force) {
+        if (force || result.getValue() == null) {
             repository.getMainScreenList(result);
+            return true;
+        }
+        return false;
     }
 
     public String getErrorMessage() {

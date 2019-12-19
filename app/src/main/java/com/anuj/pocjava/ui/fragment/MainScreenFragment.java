@@ -20,6 +20,7 @@ import com.anuj.pocjava.log.Logger;
 import com.anuj.pocjava.ui.MainActivity;
 import com.anuj.pocjava.util.Utility;
 import com.anuj.pocjava.viewmodel.MainScreenViewModel;
+import com.anuj.pocjava.viewmodel.factory.MainScreenViewModelFactory;
 
 public class MainScreenFragment extends Fragment {
 
@@ -41,7 +42,8 @@ public class MainScreenFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = ViewModelProviders.of(getActivity()).get(MainScreenViewModel.class);
+        MainScreenViewModelFactory factory = new MainScreenViewModelFactory();
+        viewModel = ViewModelProviders.of(getActivity(), factory).get(MainScreenViewModel.class);
         observeFields();
     }
 
