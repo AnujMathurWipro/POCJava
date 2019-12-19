@@ -41,7 +41,7 @@ public class MainScreenFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = ViewModelProviders.of(this).get(MainScreenViewModel.class);
+        viewModel = ViewModelProviders.of(getActivity()).get(MainScreenViewModel.class);
         observeFields();
     }
 
