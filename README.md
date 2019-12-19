@@ -20,7 +20,5 @@ This is a POC Android application. I have used MVVM design pattern to develop th
 
 ### Known issues
 - Some list item don't show image and only place-holder image is shown
-    Reason: There is no image url available OR some url loads but there is not successful response
     
-- No internet availble might fail when testing
-    Reason: App is not able to disconnect from mobile data(No API available for this). Try using WiFi
+    Reason: There is no image url available OR some url loads but there is not successful respons
