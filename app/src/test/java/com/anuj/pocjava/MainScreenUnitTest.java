@@ -2,7 +2,7 @@ package com.anuj.pocjava;
 
 import com.anuj.pocjava.models.Response;
 import com.anuj.pocjava.models.RowsItem;
-import com.anuj.pocjava.util.StringConstants;
+import com.anuj.pocjava.util.Constants;
 import com.anuj.pocjava.viewmodel.MainScreenViewModel;
 
 import org.junit.After;
@@ -29,7 +29,7 @@ public class MainScreenUnitTest {
 
     @Test
     public void testGetErrorMessage_Error() {
-        assertEquals(StringConstants.INTERNET_CONNECTIVITY_ERROR, service.getErrorMessage());
+        assertEquals(Constants.INTERNET_CONNECTIVITY_ERROR, service.getErrorMessage());
     }
 
     @Test

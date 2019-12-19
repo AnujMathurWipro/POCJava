@@ -13,7 +13,7 @@
 			android:layout_width="match_parent"
 			android:layout_height="wrap_content"
 			android:background="@drawable/list_item_bg"
-			android:padding="8dp">
+			android:padding="@dimen/dimen_8dp">
 
 		<TextView
 				android:id="@+id/tv_itemTitle"
@@ -33,7 +33,7 @@
 
 		<ImageView
 				android:id="@+id/iv_itemImage"
-				android:layout_marginTop="8dp"
+				android:layout_marginTop="@dimen/dimen_8dp"
 				android:layout_below="@id/tv_itemTitle"
 				android:layout_toStartOf="@id/iv_itemArrow"
 				app:imageUrl="@{item.imageHref}"
@@ -49,6 +49,6 @@
 				android:layout_toStartOf="@id/iv_itemImage"
 				android:text='@{item.description != null ? item.description : "NA"}'
 				tools:text="sjdhakj shdkj skjd kasj dkjahs da dohaskj dhkajsh dkjas dhaksjhd"
-				android:layout_marginTop="8dp"/>
+				android:layout_marginTop="@dimen/dimen_8dp"/>
 	</RelativeLayout>
 </layout>
